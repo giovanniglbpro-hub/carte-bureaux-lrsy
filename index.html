@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Carte des Bureaux de Vote</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    #menu {
+      width: 100%;
+      padding: 8px 12px;
+      background: #f2f2f2;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    #menu label {
+      margin-right: 4px;
+      font-weight: 600;
+    }
+
+    #menu select,
+    #menu input[type="range"],
+    #menu input[type="color"],
+    #menu input[type="text"],
+    #menu button {
+      font-size: 13px;
+    }
+
+    #map {
+      width: 100%;
+      height: calc(100vh - 60px);
+    }
+
+    #searchStatus {
+      font-size: 12px;
+      color: #555;
+      margin-left: 6px;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Logo RN en haut à droite */
+    #logoRN {
+      margin-left: auto;   /* pousse le logo complètement à droite */
+      height: 32px;        /* ajuste la taille si tu veux plus grand/petit */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="menu">
+    <!-- Choix du bureau -->
+    <div class="group">
+      <label for="selectBV">Bureau :</label>
+      <select id="selectBV">
+        <option value="">-- Choisir --</option>
+      </select>
+    </div>
+
+    <!-- Réglages d'opacité -->
+    <div class="group">
+      <label for="maskOpacity">Fond sombre :</label>
+      <input id="maskOpacity" type="range" min="0" max="100" value="50">
+      <span id="maskOpacityVal">50%</span>
+    </div>
+
+    <div class="group">
+      <label for="othersOpacity">Autres bureaux :</label>
+      <input id="othersOpacity" type="range" min="0" max="100" value="70">
+      <span id="othersOpacityVal">70%</span>
+    </div>
+
+    <!-- Couleurs -->
+    <div class="group">
+      <label for="bureauColor">Couleur bureau :</label>
+      <input id="bureauColor" type="color" value="#ff0000">
+    </div>
+
+    <div class="group">
+      <label for="maskColor">Couleur fond :</label>
+      <input id="maskColor" type="color" value="#000000">
+    </div>
+
+    <!-- Export PNG -->
+    <div class="group">
+      <button id="exportBtn">Exporter PNG</button>
+    </div>
+
+    <!-- Recherche d'adresse -->
+    <div class="group" style="flex: 1 1 100%; margin-top: 4px;">
+      <label for="searchInput">Adresse :</label>
+      <input id="searchInput" type="text" style="flex:1; min-width: 200px;" placeholder="Ex : 10 Rue x, La Roche-sur-Yon">
+      <button id="searchBtn">Rechercher</button>
+      <span id="searchStatus"></span>
+    </div>
+
+    <!-- Logo RN -->
+    <img id="logoRN" src="logorn.png" alt="Logo RN">
+  </div>
+
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Turf.js pour test point-dans-polygone -->
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  <!-- html2canvas pour export PNG -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+</body>
+</html>
